@@ -1,0 +1,655 @@
+openapi: 3.0.0
+info:
+  title: Retail Accounts
+  version: 1.0.0
+  description: >-
+    Information about organization and individual accounts can be accessed with
+    the Accounts API. To add new documentations. This is new QAA content.
+
+
+    <img
+    src="https://content.pstmn.io/39401055-ad5f-4790-bea9-83bd4bce6cb0/YWNjb3VudGdpcGh5LmdpZg=="
+    width="172" height="189">
+
+
+    This is QA thoughts on docs. Here's some new documentation
+
+
+    ### Account Statements
+
+
+    Account statement endpoints allow you to query statements at any point in
+    the duration of the account's existence. Added some new stuff
+
+
+    Account statements pull all of the needed information when giving a user an
+    overview of their account history.
+
+
+    ### Account Creation
+
+
+    A new account can be created on behalf of a customer if all required
+    information is included. Please see the request documentaiton for more
+    information on this.
+
+
+    ### Account Overview
+
+
+    Account overview gives information about an account at the current state.
+    For historical information, please use the Account Statements endpoints.
+
+
+    ## Authorization
+
+
+    This collection uses OAuth2.0 and requires you to have a registered
+    application on the Hub before using the API.
+
+
+    After your app has been approved, paste your clientId, token, and app values
+    into the `Staging` environment. There is a collection-level script that will
+    check to see if your refresh token is still valid, and send a refresh
+    request if it is found to be expired, so that your requests will always be
+    up to date.
+
+
+    _**⚠️ This service should be used in accordance with our Prohibited and
+    Restricted Activities guidelines and is subject to standard rate limiting.
+    Please thoroghly review the terms before implementing into your service.**_
+servers:
+  - url: '{{baseUrl}}'
+paths:
+  /accounts/{accountNumber}/statement/date:
+    get:
+      summary: Date Statements
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: string
+          example: 01Aug2025
+        - name: to
+          in: query
+          schema:
+            type: string
+          example: 31Aug2025
+        
+      responses:
+        '200':
+          description: 200 OK
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+              example: '*'
+            Connection:
+              schema:
+                type: string
+              example: close
+            Content-Encoding:
+              schema:
+                type: string
+              example: gzip
+            Date:
+              schema:
+                type: string
+              example: Mon, 14 Jun 2021 14:30:25 GMT
+            ETag:
+              schema:
+                type: string
+              example: W/"96-S/5iQ2y1qqIInh5BwoPc+chvDJU"
+            Server:
+              schema:
+                type: string
+              example: nginx
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Vary:
+              schema:
+                type: string
+              example: Accept-Encoding
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+              example: '120'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+              example: '119'
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+              example: '1623681083'
+            x-srv-span:
+              schema:
+                type: string
+              example: v=1;s=210e5b055e5bd71e
+            x-srv-trace:
+              schema:
+                type: string
+              example: v=1;t=d33d68b932344fce
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: object
+                    properties:
+                      closing:
+                        type: number
+                      opening:
+                        type: number
+                  money:
+                    type: object
+                    properties:
+                      in:
+                        type: number
+                      out:
+                        type: number
+                  period:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                      to:
+                        type: string
+                  transactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        amount:
+                          type: number
+                        balance:
+                          type: number
+                        date:
+                          type: string
+                          format: style
+                        description:
+                          type: string
+                        type:
+                          type: string
+              example:
+                balance:
+                  closing: 458.28
+                  opening: 99.99
+                money:
+                  in: 164.88
+                  out: 579.77
+                period:
+                  from: Oct 01 2025
+                  to: Oct 09 2025
+                transactions:
+                  - amount: 717.65
+                    balance: 137.07
+                    date: Oct 09 2025 13:52:40
+                    description: MacGyver LLC
+                    type: invoice
+                  - amount: -548.43
+                    balance: 153.57
+                    date: Oct 09 2025 16:27:31
+                    description: Beatty, Paucek and Gulgowski
+                    type: payment
+                  - amount: -141.57
+                    balance: 621.31
+                    date: Tue Oct 10 2025 01:11:40
+                    description: Baumbach - Feest
+                    type: payment
+                  - amount: -961.64
+                    balance: 673.77
+                    date: Oct 09 2025 22:04:53
+                    description: Witting and Sons
+                    type: payment
+                  - amount: 283.83
+                    balance: 431.27
+                    date: Oct 9 2025 18:18:37
+                    description: Hoeger and Sons
+                    type: invoice
+                  - amount: -533.98
+                    balance: 497.56
+                    date: Oct 09 2025 15:10:26
+                    description: Collins - Rau
+                    type: withdrawal
+                  - amount: 311.25
+                    balance: 309.01
+                    date: Oct 09 2025 11:17:16
+                    description: Dickens, Goodwin and Swaniawski
+                    type: deposit
+                  - amount: 70.13
+                    balance: 510.07
+                    date: Tue Oct 10 2025 07:51:59
+                    description: Kemmer - Simonis
+                    type: deposit
+                  - amount: 516.64
+                    balance: 85.61
+                    date: Tue Oct 10 2025 05:18:37
+                    description: Johnston Inc
+                    type: invoice
+                  - amount: -236.84
+                    balance: 451.95
+                    date: Tue Oct 10 2025 01:58:56
+                    description: Gulgowski LLC
+                    type: withdrawal
+        '404':
+          description: 404 Not found
+      tags:
+        - Statement
+      description: >-
+        ## Get Account Statement by Date
+
+
+        This endpoint retrieves the account statement for a specified account
+        number within a defined date range. It provides details about the
+        account balance, transaction history, and the period for which the
+        statement is requested.
+
+
+        ### Request Parameters
+
+
+        - **accountNumber** (path parameter): The unique identifier for the
+        account whose statement is being requested.
+            
+        - **from** (query parameter): The start date for the statement period in
+        the format `DDMMMYYYY` (e.g., `01Aug2025`).
+            
+        - **to** (query parameter): The end date for the statement period in the
+        same format (e.g., `31Aug2025`).
+            
+
+        ### Response Structure
+
+
+        The response will return a JSON object containing the following fields:
+
+
+        - **balance**: An object that includes:
+            
+            - **closing**: The closing balance of the account at the end of the specified period.
+                
+            - **opening**: The opening balance of the account at the beginning of the specified period.
+                
+        - **money**: An object that summarizes the money flow:
+            
+            - **in**: Total amount of money credited to the account during the specified period.
+                
+            - **out**: Total amount of money debited from the account during the specified period.
+                
+        - **period**: An object indicating the date range for the statement:
+            
+            - **from**: The start date of the statement period.
+                
+            - **to**: The end date of the statement period.
+                
+        - **transactions**: An array of transaction objects, each containing:
+            
+            - **amount**: The amount of the transaction.
+                
+            - **balance**: The balance after the transaction.
+                
+            - **date**: The date of the transaction.
+                
+            - **description**: A brief description of the transaction.
+                
+            - **type**: The type of transaction (e.g., credit or debit).
+                
+
+        ### Example Response
+
+
+        ``` json
+
+        {
+          "balance": {
+            "closing": 0,
+            "opening": 0
+          },
+          "money": {
+            "in": 0,
+            "out": 0
+          },
+          "period": {
+            "from": "",
+            "to": ""
+          },
+          "transactions": [
+            {
+              "amount": 0,
+              "balance": 0,
+              "date": "",
+              "description": "",
+              "type": ""
+            }
+          ]
+        }
+
+         ```
+
+        This endpoint is useful for users who need to review their account
+        activity and balances over a specific time frame.
+    parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{accountNumber}}'
+  /accounts/{accountNumber}/statement/latest:
+    get:
+      summary: Latest Statement
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: object
+                    properties:
+                      closing:
+                        type: number
+                      opening:
+                        type: number
+                  money:
+                    type: object
+                    properties:
+                      in:
+                        type: number
+                      out:
+                        type: number
+                  period:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                        format: style
+                      to:
+                        type: string
+                  transactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        amount:
+                          type: number
+                        balance:
+                          type: number
+                        date:
+                          type: string
+                          format: style
+                        description:
+                          type: string
+                        type:
+                          type: string
+              example:
+                balance:
+                  closing: 458.28
+                  opening: 99.99
+                money:
+                  in: 164.88
+                  out: 579.77
+                period:
+                  from: Oct 01 2025 11:34:41
+                  to: Oct 09 2025 11:34:41
+                transactions:
+                  - amount: 717.65
+                    balance: 137.07
+                    date: Oct 09 2025 13:52:40
+                    description: MacGyver LLC
+                    type: invoice
+                  - amount: -548.43
+                    balance: 153.57
+                    date: Oct 09 2025 16:27:31
+                    description: Beatty, Paucek and Gulgowski
+                    type: payment
+                  - amount: -141.57
+                    balance: 621.31
+                    date: Tue Oct 10 2025 01:11:40
+                    description: Baumbach - Feest
+                    type: payment
+                  - amount: -961.64
+                    balance: 673.77
+                    date: Oct 09 2025 22:04:53
+                    description: Witting and Sons
+                    type: payment
+                  - amount: 283.83
+                    balance: 431.27
+                    date: Oct 9 2025 18:18:37
+                    description: Hoeger and Sons
+                    type: invoice
+                  - amount: -533.98
+                    balance: 497.56
+                    date: Oct 09 2025 15:10:26
+                    description: Collins - Rau
+                    type: withdrawal
+                  - amount: 311.25
+                    balance: 309.01
+                    date: Oct 09 2025 11:17:16
+                    description: Dickens, Goodwin and Swaniawski
+                    type: deposit
+                  - amount: 70.13
+                    balance: 510.07
+                    date: Tue Oct 10 2025 07:51:59
+                    description: Kemmer - Simonis
+                    type: deposit
+                  - amount: 516.64
+                    balance: 85.61
+                    date: Tue Oct 10 2025 05:18:37
+                    description: Johnston Inc
+                    type: invoice
+                  - amount: -236.84
+                    balance: 451.95
+                    date: Tue Oct 10 2025 01:58:56
+                    description: Gulgowski LLC
+                    type: withdrawal
+      tags:
+        - Statement
+      description: >-
+        ### Retrieve Latest Account Statement
+
+
+        This endpoint retrieves the latest statement for a specific account
+        identified by the `accountNumber`. It provides a summary of the
+        account's financial activity over a defined period, including balances,
+        money flow, and individual transactions.
+
+
+        #### Request Parameters
+
+
+        - **accountNumber** (path parameter): The unique identifier for the
+        account whose latest statement is being requested. Ensure that the
+        `accountNumber` is valid to receive the correct statement.
+            
+
+        #### Response Format
+
+
+        The response will be a JSON object containing the following structure:
+
+
+        - **balance**: An object representing the account balance.
+            
+            - **closing**: The closing balance of the account.
+                
+            - **opening**: The opening balance of the account.
+                
+        - **money**: An object detailing the money flow.
+            
+            - **in**: Total amount of money received.
+                
+            - **out**: Total amount of money spent.
+                
+        - **period**: An object indicating the statement period.
+            
+            - **from**: The start date of the statement period.
+                
+            - **to**: The end date of the statement period.
+                
+        - **transactions**: An array of transaction objects, each containing:
+            
+            - **amount**: The amount of the transaction.
+                
+            - **balance**: The balance after the transaction.
+                
+            - **date**: The date of the transaction.
+                
+            - **description**: A brief description of the transaction.
+                
+            - **type**: The type of the transaction (e.g., debit, credit).
+                
+
+        #### Notes
+
+
+        - The response will contain all transactions within the specified
+        period, along with the relevant balance information.
+    parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        description: '(Required) '
+        schema:
+          type: string
+        example: '{{accountNumber}}'
+  /accounts/{accountNumber}:
+    get:
+      summary: Overview request
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: object
+                    properties:
+                      available:
+                        type: number
+                      present:
+                        type: number
+                  details:
+                    type: object
+                    properties:
+                      domestic:
+                        type: object
+                        properties:
+                          account:
+                            type: string
+                            format: utc-millisec
+                          routing:
+                            type: string
+                            format: utc-millisec
+                      international:
+                        type: object
+                        properties:
+                          bic:
+                            type: string
+                          iban:
+                            type: string
+                  interestRate:
+                    type: number
+                  lastStatementDate:
+                    type: string
+                    format: style
+                  type:
+                    type: string
+              example:
+                balance:
+                  available: 109.58
+                  present: 344.54
+                details:
+                  domestic:
+                    account: '34183769'
+                    routing: '69437301'
+                  international:
+                    bic: AAQIMWT1
+                    iban: '{AL10010054848GYQ8536W4967Q3R}'
+                interestRate: 0.01
+                lastStatementDate: Tue Oct 10 2023 00:41:55 GMT-0500 (Central Daylight Time)
+                type: Savings Account
+      security:
+        - BearerAuth: []
+      description: >-
+        ### Retrieve Account Information
+
+
+        This endpoint allows you to retrieve detailed information about a
+        specific account using its account number. It provides insights into the
+        account's balance, details, interest rate, and other relevant
+        information.
+
+
+        #### Request Parameters
+
+
+        - **accountNumber** (path parameter): The unique identifier for the
+        account you wish to access. This should be provided in the URL.
+            
+
+        #### Expected Response
+
+
+        On a successful request, the response will include the following
+        information:
+
+
+        - **balance**: An object containing:
+            
+            - **available**: The amount of funds available for withdrawal.
+                
+            - **present**: The total amount currently present in the account.
+                
+        - **details**: An object providing account details:
+            
+            - **domestic**: An object containing:
+                
+                - **account**: The domestic account number.
+                    
+                - **routing**: The domestic routing number.
+                    
+            - **international**: An object containing:
+                
+                - **bic**: The Bank Identifier Code for international transactions.
+                    
+                - **iban**: The International Bank Account Number.
+                    
+        - **interestRate**: The interest rate applicable to the account.
+            
+        - **lastStatementDate**: The date of the last statement issued for the
+        account.
+            
+        - **type**: The type of account (e.g., savings, checking).
+            
+
+        #### Notes
+
+
+        - Ensure that the account number provided is valid; otherwise, the
+        request may return an error.
+            
+        - The response will be in JSON format, providing a structured overview
+        of the account's status and details.
+    parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{accountNumber}}'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - BearerAuth: []

@@ -1,0 +1,5 @@
+name: Accounts DEV
+values:
+  - key: baseUrl
+    value: 'http://localhost:30000'
+    enabled: true

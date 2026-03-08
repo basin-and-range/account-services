@@ -1,0 +1,195 @@
+module.exports = {
+  create: {
+    details: {
+      domestic: {
+        account: "02560233",
+        routing: "71993962"
+      },
+      international: {
+        bic: "PYAUISI1",
+        iban: "AT780032406410040055"
+      }
+    },
+    type: "Investment Account"
+  },
+
+  deleteAccount: {},
+
+  overview: {
+    balance: "<object>",
+    details: "<object>",
+    interestRate: "<number>",
+    lastStatementDate: "<string>",
+    type: "<string>"
+  },
+
+  date: {
+    balance: {
+      closing: 458.28,
+      opening: 99.99
+    },
+    money: {
+      in: 164.88,
+      out: 579.77
+    },
+    transactions: [
+      {
+        amount: 717.65,
+        balance: 137.07,
+        date: "Oct 09 2025 13:52:40",
+        description: "MacGyver LLC",
+        type: "invoice"
+      },
+      {
+        amount: -548.43,
+        balance: 153.57,
+        date: "Oct 09 2025 16:27:31",
+        description: "Beatty, Paucek and Gulgowski",
+        type: "payment"
+      },
+      {
+        amount: -141.57,
+        balance: 621.31,
+        date: "Tue Oct 10 2025 01:11:40",
+        description: "Baumbach - Feest",
+        type: "payment"
+      },
+      {
+        amount: -961.64,
+        balance: 673.77,
+        date: "Oct 09 2025 22:04:53",
+        description: "Witting and Sons",
+        type: "payment"
+      },
+      {
+        amount: 283.83,
+        balance: 431.27,
+        date: "Oct 9 2025 18:18:37",
+        description: "Hoeger and Sons",
+        type: "invoice"
+      },
+      {
+        amount: -533.98,
+        balance: 497.56,
+        date: "Oct 09 2025 15:10:26",
+        description: "Collins - Rau",
+        type: "withdrawal"
+      },
+      {
+        amount: 311.25,
+        balance: 309.01,
+        date: "Oct 09 2025 11:17:16",
+        description: "Dickens, Goodwin and Swaniawski",
+        type: "deposit"
+      },
+      {
+        amount: 70.13,
+        balance: 510.07,
+        date: "Tue Oct 10 2025 07:51:59",
+        description: "Kemmer - Simonis",
+        type: "deposit"
+      },
+      {
+        amount: 516.64,
+        balance: 85.61,
+        date: "Tue Oct 10 2025 05:18:37",
+        description: "Johnston Inc",
+        type: "invoice"
+      },
+      {
+        amount: -236.84,
+        balance: 451.95,
+        date: "Tue Oct 10 2025 01:58:56",
+        description: "Gulgowski LLC",
+        type: "withdrawal"
+      }
+    ]
+  },
+
+  latest: {
+    balance: {
+      closing: 458.28,
+      opening: 99.99
+    },
+    money: {
+      in: 164.88,
+      out: 579.77
+    },
+    period: {
+      from: "Oct 01 2025 11:34:41",
+      to: "Oct 09 2025 11:34:41"
+    },
+    transactions: [
+      {
+        amount: 717.65,
+        balance: 137.07,
+        date: "Oct 09 2025 13:52:40",
+        description: "MacGyver LLC",
+        type: "invoice"
+      },
+      {
+        amount: 548.43,
+        balance: 153.57,
+        date: "Oct 09 2025 16:27:31",
+        description: "Beatty, Paucek and Gulgowski",
+        type: "payment"
+      },
+      {
+        amount: 141.57,
+        balance: 621.31,
+        date: "Tue Oct 10 2025 01:11:40",
+        description: "Baumbach - Feest",
+        type: "payment"
+      },
+      {
+        amount: 961.64,
+        balance: 673.77,
+        date: "Oct 09 2025 22:04:53",
+        description: "Witting and Sons",
+        type: "payment"
+      },
+      {
+        amount: 283.83,
+        balance: 431.27,
+        date: "Oct 09 2025 18:18:37",
+        description: "Hoeger and Sons",
+        type: "invoice"
+      },
+      {
+        amount: 533.98,
+        balance: 497.56,
+        date: "Oct 09 2025 15:10:26",
+        description: "Collins - Rau",
+        type: "withdrawal"
+      },
+      {
+        amount: 311.25,
+        balance: 309.01,
+        date: "Oct 09 2025 11:17:16",
+        description: "Dickens, Goodwin and Swaniawski",
+        type: "deposit"
+      },
+      {
+        amount: 70.13,
+        balance: 510.07,
+        date: "Tue Oct 10 2025 07:51:59",
+        description: "Kemmer - Simonis",
+        type: "deposit"
+      },
+      {
+        amount: 516.64,
+        balance: 85.61,
+        date: "Tue Oct 10 2025 05:18:37",
+        description: "Johnston Inc",
+        type: "invoice"
+      },
+      {
+        amount: 236.84,
+        balance: 451.95,
+        date: "Tue Oct 10 2025 01:58:56",
+        description: "Gulgowski LLC",
+        type: "withdrawal"
+      }
+    ]
+  }
+};

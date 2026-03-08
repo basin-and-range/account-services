@@ -1,0 +1,138 @@
+$kind: http-request
+description: >-
+  ### Retrieve Account Information
+
+
+  This endpoint allows you to retrieve detailed information about a specific
+  account using its account number. It provides insights into the account's
+  balance, details, interest rate, and other relevant information.
+
+
+  #### Request Parameters
+
+
+  - **accountNumber** (path parameter): The unique identifier for the account
+  you wish to access. This should be provided in the URL.
+      
+
+  #### Expected Response
+
+
+  On a successful request, the response will include the following information:
+
+
+  - **balance**: An object containing:
+      
+      - **available**: The amount of funds available for withdrawal.
+          
+      - **present**: The total amount currently present in the account.
+
+          
+  - **details**: An object providing account details:
+      
+      - **domestic**: An object containing:
+          
+          - **account**: The domestic account number.
+              
+          - **routing**: The domestic routing number.
+              
+      - **international**: An object containing:
+          
+          - **bic**: The Bank Identifier Code for international transactions.
+              
+          - **iban**: The International Bank Account Number.
+
+              
+  - **interestRate**: The interest rate applicable to the account.
+      
+  - **lastStatementDate**: The date of the last statement issued for the
+  account.
+      
+  - **type**: The type of account (e.g., savings, checking).
+      
+
+  #### Notes
+
+
+  - Ensure that the account number provided is valid; otherwise, the request may
+  return an error.
+      
+  - The response will be in JSON format, providing a structured overview of the
+  account's status and details.
+url: "{{baseUrl}}/accounts/:accountNumber"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  accountNumber: "{{accountNumber}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{vault:adpSecret}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      const Ajv = require('ajv');
+
+      const ajv = new Ajv();
+
+
+      const schema = {
+          type: "object",
+          additionalProperties: false,
+          required: ["balance", "details", "interestRate", "lastStatementDate", "type"],
+          properties: {
+              balance: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["available", "present"],
+                  properties: {
+                      available: { type: "number" },
+                      present: { type: "number" }
+                  }
+              },
+              details: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["domestic", "international"],
+                  properties: {
+                      domestic: {
+                          type: "object",
+                          additionalProperties: false,
+                          required: ["account", "routing"],
+                          properties: {
+                              account: { type: "string" },
+                              routing: { type: "string" }
+                          }
+                      },
+                      international: {
+                          type: "object",
+                          additionalProperties: false,
+                          required: ["bic", "iban"],
+                          properties: {
+                              bic: { type: "string" },
+                              iban: { type: "string" }
+                          }
+                      }
+                  }
+              },
+              interestRate: { type: "number" },
+              lastStatementDate: { type: "string" },
+              type: { type: "string" }
+          }
+      };
+
+
+      const data = pm.response.json();
+
+      const validate = ajv.compile(schema);
+
+      const valid = validate(data);
+
+
+      pm.test("Response matches schema", function () {
+          pm.expect(valid, validate.errors ? validate.errors.map(e => e.instancePath + ' ' + e.message).join(', ') : '').to.be.true;
+      });
+    language: text/javascript
+examples: ./.resources/Overview request.resources/examples
+order: 1000

@@ -1,0 +1,51 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/accounts/:accountNumber"
+  method: PATCH
+  headers:
+    x-mock-response-code: <integer>
+    Content-Type: application/json
+    Accept: application/json
+  pathVariables:
+    accountNumber: ABC123
+  body:
+    type: json
+    content: |-
+      {
+        "holder": {
+          "address": {
+            "city": "{{$city}}",
+            "country": "{{$country}}",
+            "street": "{{$street}}"
+          },
+          "dob": "{{$dob}}",
+          "name": {
+            "first": "{{$firstName}}",
+            "last": "{{$lastName}}",
+            "middle": "{{$middleName}}"
+          }
+        },
+        "type": "{{$accountType}}"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "details": {
+          "domestic": {
+            "account": "02560233",
+            "routing": "71993962"
+          },
+          "international": {
+            "bic": "PYAUISI1",
+            "iban": "{{$queryParams 'accountNumber'}}"
+          }
+        },
+        "type": "Investment Account"
+      }
+order: 1000

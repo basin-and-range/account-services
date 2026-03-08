@@ -1,0 +1,9 @@
+name: Accounts TEST
+values:
+  - key: baseUrl
+    value: https://4f654048-a802-4bfc-a07a-4fce2446c52b.mock.pstmn.io
+    enabled: true
+  - key: accountNumber
+    value: ABC123
+    enabled: true
+color: null

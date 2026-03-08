@@ -1,0 +1,128 @@
+$kind: http-request
+description: >-
+  ## Create Account
+
+
+  This endpoint allows users to create a new account by submitting the required
+  information in the request body. The account can be of various types, such as
+  a savings account.
+
+
+  ### Request Body Parameters
+
+
+  The request body must be formatted as JSON and include the following
+  parameters:
+
+
+  - **holder** (object): Contains information about the account holder.
+      
+      - **address** (object): The address of the account holder.
+          
+          - **city** (string): The city where the account holder resides.
+              
+          - **street** (string): The street address of the account holder.
+              
+          - **zip** (string): The postal code of the account holder's address.
+              
+      - **country** (string): The country of the account holder.
+
+          
+  - **dob** (string): The date of birth of the account holder in a valid date
+  format.
+      
+  - **name** (object): The full name of the account holder.
+      
+      - **first** (string): The first name of the account holder.
+          
+      - **last** (string): The last name of the account holder.
+          
+      - **middle** (string): The middle name of the account holder (optional).
+
+          
+  - **type** (string): The type of account being created (e.g., "Savings
+  Account").
+      
+
+  ### Response Structure
+
+
+  Upon a successful account creation, the response will return a JSON object
+  containing the following structure:
+
+
+  - **details** (object): Contains account-specific details.
+      
+      - **domestic** (object): Information related to domestic transactions.
+          
+          - **account** (string): The domestic account number.
+              
+          - **foo** (string): Additional domestic information (specific purpose not detailed).
+              
+          - **routing** (string): The routing number for domestic transactions.
+              
+      - **international** (object): Information related to international transactions.
+          
+          - **bic** (string): The Bank Identifier Code for international transactions.
+              
+          - **iban** (string): The International Bank Account Number for international transactions.
+
+              
+  - **type** (string): The type of account that was created.
+      
+
+  Ensure that all required fields are provided in the request to successfully
+  create an account.
+url: "{{baseUrl}}/accounts"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "holder": {
+        "address": {
+          "city": "{{city}}",
+          "country": "Saint Vincent and the Grenadines",
+          "street": "3475 King Mill",
+          "zip": "78645"
+        },
+        "dob": "Wed Mar 15 2023 10:33:20 GMT-0500 (Central Daylight Time)",
+        "name": {
+          "first": "Leta",
+          "last": "Dickinson",
+          "middle": "Bradly"
+        }
+      },
+      "type": "Savings Account"
+    }
+scripts:
+  - type: afterResponse
+    code: |
+      pm.test("Response time is less than 1000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(1000); 
+      });
+      let responseJson = null;
+      try {
+          responseJson = pm.response.json();
+      }
+      catch(e) {
+          console.log("No content");
+      }
+
+      if(responseJson)
+      {
+
+        pm.test("Response should be a parsable JSON", function() {
+            pm.expect(responseJson).to.be.ok;
+        });
+
+        pm.test("Response body should be an object", function() {
+            pm.expect(responseJson).to.be.an('object');
+        });
+      }
+    language: text/javascript
+examples: ./.resources/Create.resources/examples
+order: 3000

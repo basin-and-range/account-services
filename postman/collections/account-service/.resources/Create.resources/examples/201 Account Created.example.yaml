@@ -1,0 +1,51 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/accounts"
+  method: POST
+  headers:
+    Content-Type: application/json
+    Accept: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "holder": {
+          "address": {
+            "city": "Hickleton",
+            "country": "Saint Vincent and the Grenadines",
+            "street": "3475 King Mill",
+            "zip": "<string>"
+          },
+          "dob": "Wed Mar 15 2023 10:33:20 GMT-0500 (Central Daylight Time)",
+          "name": {
+            "first": "Leta",
+            "last": "Dickinson",
+            "middle": "Bradly"
+          }
+        },
+        "type": "Savings Account"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "details": {
+          
+          "domestic": {
+            "account": "{{$randomBankAccountIban}}",
+            "foo":"bar",
+            "routing": "71993962"
+          },
+          "international": {
+            "bic": "PYAUISI1",
+            "iban": "AT780032406410040055"
+          }
+        },
+        "type": "Investment Checking Account"
+      }
+order: 1000

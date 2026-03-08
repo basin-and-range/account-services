@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webex Call Control API Documentation</title>
+    <style>
+        /* ============================================
+           ADJUST BUTTON POSITION HERE
+           ============================================
+           Change these values to move the button:
+           - Increase --btn-top to move DOWN
+           - Increase --btn-left to move RIGHT
+           ============================================ */
+        :root {
+            --btn-top: 45px;      /* Distance from top of image */
+            --btn-left: 850px;    /* Distance from left of image */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .image-container {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+        }
+
+        .run-in-postman-btn {
+            /* Button position - controlled by CSS variables at top of file */
+            position: absolute;
+            top: var(--btn-top);
+            left: var(--btn-left);
+            
+            /* Button styling */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ff6c37;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .run-in-postman-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 108, 55, 0.5);
+        }
+
+        .run-in-postman-btn::before {
+            content: "🚀";
+            font-size: 1rem;
+        }
+
+        .footer {
+            background-color: #1b1b1b;
+            color: #999;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #89bf04;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button position is fixed using absolute coordinates above.
+           It will stay at the same position relative to the image container
+           regardless of screen size. Adjust --btn-top and --btn-left at
+           the top of this file to reposition. */
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            /* Keep button slightly smaller on mobile for better fit */
+            .run-in-postman-btn {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="webex-api.png" alt="Webex Call Control API Documentation" />
+            <a href="https://god.gw.postman.com/run-collection/34829850-55efc6b0-ba64-4062-9e03-70e5385af298?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D34829850-55efc6b0-ba64-4062-9e03-70e5385af298%26entityType%3Dcollection%26workspaceId%3D02a5d367-3bee-4182-a8b9-102aa69565b9" 
+               class="run-in-postman-btn" 
+               target="_blank"
+               rel="noopener noreferrer">
+                Run in Postman
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Webex Call Control API | <a href="https://developer.webex.com/calling/docs/api/v1/call-controls/" target="_blank">Official Documentation</a></p>
+    </div>
+</body>
+</html>

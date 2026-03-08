@@ -1,0 +1,163 @@
+$kind: http-request
+description: >-
+  ### Retrieve Latest Account Statement
+
+
+  This endpoint retrieves the latest statement for a specific account identified
+  by the `accountNumber`. It provides a summary of the account's financial
+  activity over a defined period, including balances, money flow, and individual
+  transactions.
+
+
+  #### Request Parameters
+
+
+  - **accountNumber** (path parameter): The unique identifier for the account
+  whose latest statement is being requested. Ensure that the `accountNumber` is
+  valid to receive the correct statement.
+      
+
+  #### Response Format
+
+
+  The response will be a JSON object containing the following structure:
+
+
+  - **balance**: An object representing the account balance.
+      
+      - **closing**: The closing balance of the account.
+          
+      - **opening**: The opening balance of the account.
+
+          
+  - **money**: An object detailing the money flow.
+      
+      - **in**: Total amount of money received.
+          
+      - **out**: Total amount of money spent.
+
+          
+  - **period**: An object indicating the statement period.
+      
+      - **from**: The start date of the statement period.
+          
+      - **to**: The end date of the statement period.
+
+          
+  - **transactions**: An array of transaction objects, each containing:
+      
+      - **amount**: The amount of the transaction.
+          
+      - **balance**: The balance after the transaction.
+          
+      - **date**: The date of the transaction.
+          
+      - **description**: A brief description of the transaction.
+          
+      - **type**: The type of the transaction (e.g., debit, credit).
+
+          
+
+  #### Notes
+
+
+  - The response will contain all transactions within the specified period,
+  along with the relevant balance information.
+url: "{{baseUrl}}/accounts/:accountNumber/statement/latest"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: accountNumber
+    value: "{{accountNumber}}"
+    description: "(Required) "
+scripts:
+  - type: afterResponse
+    code: >-
+      pm.test("Response time is less than 1000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(1000); 
+      });
+
+      let responseJson = null;
+
+      try {
+          responseJson = pm.response.json();
+      }
+
+      catch(e) {
+          console.log("No content");
+      }
+
+
+      if(responseJson)
+
+      {
+
+        pm.test("Response should be a parsable JSON", function() {
+            pm.expect(responseJson).to.be.ok;
+        });
+
+        pm.test("Response body should be an object", function() {
+            pm.expect(responseJson).to.be.an('object');
+        });
+      }
+
+
+      pm.test("Response matches schema", function () {
+          const Ajv = require('ajv');
+          const ajv = new Ajv();
+
+          const schema = {
+              "type": "object",
+              "required": ["balance", "money", "period", "transactions"],
+              "properties": {
+                  "balance": {
+                      "type": "object",
+                      "required": ["closing", "opening"],
+                      "properties": {
+                          "closing": { "type": "number" },
+                          "opening": { "type": "number" }
+                      }
+                  },
+                  "money": {
+                      "type": "object",
+                      "required": ["in", "out"],
+                      "properties": {
+                          "in": { "type": "number" },
+                          "out": { "type": "number" }
+                      }
+                  },
+                  "period": {
+                      "type": "object",
+                      "required": ["from", "to"],
+                      "properties": {
+                          "from": { "type": "string" },
+                          "to": { "type": "string" }
+                      }
+                  },
+                  "transactions": {
+                      "type": "array",
+                      "items": {
+                          "type": "object",
+                          "required": ["amount", "balance", "date", "description", "type"],
+                          "properties": {
+                              "amount": { "type": "number" },
+                              "balance": { "type": "number" },
+                              "date": { "type": "string" },
+                              "description": { "type": "string" },
+                              "type": { "type": "string" }
+                          }
+                      }
+                  }
+              }
+          };
+
+          const data = pm.response.json();
+          const validate = ajv.compile(schema);
+          const valid = validate(data);
+
+          pm.expect(valid, valid ? "" : validate.errors.map(e => e.instancePath + " " + e.message).join(", ")).to.be.true;
+      });
+    language: text/javascript
+examples: ./.resources/Latest Statement.resources/examples
+order: 5000

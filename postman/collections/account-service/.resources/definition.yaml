@@ -1,0 +1,47 @@
+$kind: collection
+description: |-
+  Information about organization and individual accounts can be accessed with the Accounts API. To add new documentations. This is new QAA content.
+
+  <img src="https://content.pstmn.io/39401055-ad5f-4790-bea9-83bd4bce6cb0/YWNjb3VudGdpcGh5LmdpZg==" width="172" height="189">
+
+  This is QA thoughts on docs. Here's some new documentation
+
+  ### Account Statements
+
+  Account statement endpoints allow you to query statements at any point in the duration of the account's existence. Added some new stuff
+
+  Account statements pull all of the needed information when giving a user an overview of their account history.
+
+  ### Account Creation
+
+  A new account can be created on behalf of a customer if all required information is included. Please see the request documentaiton for more information on this.
+
+  ### Account Overview
+
+  Account overview gives information about an account at the current state. For historical information, please use the Account Statements endpoints.
+
+  ## Authorization
+
+  This collection uses OAuth2.0 and requires you to have a registered application on the Hub before using the API.
+
+  After your app has been approved, paste your clientId, token, and app values into the `Staging` environment. There is a collection-level script that will check to see if your refresh token is still valid, and send a refresh request if it is found to be expired, so that your requests will always be up to date.
+
+  _**⚠️ This service should be used in accordance with our Prohibited and Restricted Activities guidelines and is subject to standard rate limiting. Please thoroghly review the terms before implementing into your service.**_
+variables:
+  logoUrl: https://content.pstmn.io/bb8a9b7d-e95e-4212-8736-442992cdfa78/aW1hZ2UucG5n
+  logoHeight: "30"
+  logoWidth: "30"
+  defaultLogo: |
+    {
+        "logoUrl":"https://i.imgur.com/7Ax6mSX.png",
+        "logoWidth":100,
+        "logoHeight":100
+    }
+  city: ""
+  token: ""
+  accountNumber: ABC123
+  baseUrl: "{{baseUrl}}"
+auth:
+  - id: ""
+    type: bearer
+    name: bearer auth
